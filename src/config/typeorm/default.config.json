@@ -1,0 +1,25 @@
+{
+  "name": "default",
+  "type": "mysql",
+  "host": "localhost",
+  "port": 3306,
+  "username": "root",
+  "password": "",
+  "database": "1a-services",
+  "synchronize": true,
+  "logging": false,
+  "entities": [
+    "${rootDir}/entities/**/*.{js,ts}"
+  ],
+  "migrations": [
+    "${rootDir}/migration/**/*.{js,ts}"
+  ],
+  "subscribers": [
+    "${rootDir}/subscriber/**/*.{js,ts}"
+  ],
+  "cli": {
+    "entitiesDir": "${rootDir}/entities",
+    "migrationsDir": "${rootDir}/migration",
+    "subscribersDir": "${rootDir}/subscriber"
+  }
+}

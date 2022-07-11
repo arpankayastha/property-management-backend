@@ -1,0 +1,6 @@
+index,name,country_code,phone,email,internal_notes,latitude,longitude,street_address,house_name,floor,unit,buzzer_number,city,state,pin_code,country,notes
+1,Murtaza Vohra,91,9426616652,murtaza1@alchemytech.ca,-0,23,71,street 1,name1,1,A,-0,Ahmedabad,Gujarat,380010,India,-0
+2,Murtaza Vohra,91,9426616653,murtaza2@alchemytech.ca,-0,24,72,street 2,name2,2,B,-0,Bhavnagar,Gujarat,360001,India,-0
+3,Murtaza Vohra,91,9426616654,murtaza3@alchemytech.ca,-0,25,73,street 3,name3,3,C,-0,Surat,Gujarat,456789,India,-0
+4,Sagar Parmar,91,9979777256,sagar1@alchemytech.ca,-0,26,74,street 4,name4,4,D,-0,Rajkot,Gujarat,344554,India,-0
+5,Sagar Parmar,91,9979777257,sagar2@alchemytech.ca,-0,27,75,street 5,mane5,5,E,-0,Vadodara,Gujarat,123456,India,-0
