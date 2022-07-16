@@ -3,30 +3,33 @@ import {
     Column,
     CreateDateColumn,
     Entity,
-    ManyToOne,
+    OneToMany,
     PrimaryGeneratedColumn,
     UpdateDateColumn
 } from "typeorm";
 // @ts-ignore
 import * as bcrypt from "bcryptjs";
-import {Hotel} from "./Hotel";
+import {Property} from "./Property";
 
-@Entity('properties')
-export class Property extends BaseEntity {
+@Entity('hotels')
+export class Hotel extends BaseEntity {
     @PrimaryGeneratedColumn()
     id: number;
-
-    @ManyToOne(() => Hotel, object => object.properties, {nullable: true})
-    hotel: Hotel;
 
     @Column({nullable: true})
     name: string;
 
     @Column({nullable: true})
-    propertyId: string;
+    location: string;
 
     @Column({nullable: true})
-    propertyLockFile: string;
+    address: string;
+
+    @Column({nullable: true})
+    contactPerson: string;
+
+    @Column({nullable: true})
+    contactNumber: string;
 
     @Column({default: true})
     isActive: boolean;
@@ -36,4 +39,7 @@ export class Property extends BaseEntity {
 
     @UpdateDateColumn()
     updatedAt: Date;
+
+    @OneToMany(() => Property, object => object.hotel, {nullable: true})
+    properties: Property[];
 }

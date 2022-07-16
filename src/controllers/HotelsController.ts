@@ -1,24 +1,24 @@
 import {BodyParams, Controller, Delete, Get, PathParams, Post, QueryParams} from "@tsed/common";
-import {Property} from "../entities/Property";
-import {PropertiesRepository} from "../repositories/PropertiesRepository";
+import {Hotel} from "../entities/Hotel";
+import {HotelsRepository} from "../repositories/HotelsRepository";
 
-@Controller("/properties")
-export class PropertiesController {
-    constructor(private propertiesRepository: PropertiesRepository) {
+@Controller("/hotels")
+export class HotelsController {
+    constructor(private hotelsRepository: HotelsRepository) {
         //
     }
 
     @Get("/")
     async getList(@QueryParams() requestData: any): Promise<object> {
         try {
-            let properties = await this.propertiesRepository.findAll(requestData);
+            let hotels = await this.hotelsRepository.findAll(requestData);
             return {
                 success: true,
                 code   : 200,
-                message: 'Properties have been retrieved.',
+                message: 'Hotels have been retrieved.',
                 data   : {
-                    properties : properties[0],
-                    total_count: properties[1]
+                    hotels     : hotels[0],
+                    total_count: hotels[1]
                 }
             }
         } catch (error) {
@@ -31,29 +31,29 @@ export class PropertiesController {
     }
 
     @Post("/")
-    async create(@BodyParams() property: any): Promise<object> {
+    async create(@BodyParams() hotel: any): Promise<object> {
         try {
-            let propertyDetail = new Property();
-            if (property && property.id) {
+            let hotelDetail = new Hotel();
+            if (hotel && hotel.id) {
                 // @ts-ignore
-                propertyDetail = await this.propertiesRepository.findOne(property.id);
+                hotelDetail = await this.hotelsRepository.findOne(hotel.id);
             }
 
-            propertyDetail = Object.assign(propertyDetail, property);
-            propertyDetail = await this.propertiesRepository.save(propertyDetail);
+            hotelDetail = Object.assign(hotelDetail, hotel);
+            hotelDetail = await this.hotelsRepository.save(hotelDetail);
             return {
                 success: true,
                 code   : 200,
-                message: (property.id) ? 'Property has been updated.' : 'Property has been created.',
+                message: (hotel.id) ? 'Hotel has been updated.' : 'Hotel has been created.',
                 data   : {
-                    property: propertyDetail
+                    hotel: hotelDetail
                 }
             };
         } catch (error) {
             return {
                 success: false,
                 code   : 201,
-                message: error.message || 'Something went wrong. Please contact support team.',
+                message: 'Something went wrong. Please contact support team.',
             };
         }
     }
@@ -61,13 +61,13 @@ export class PropertiesController {
     @Get("/:id")
     async get(@PathParams('id') id: string): Promise<object> {
         try {
-            const property = await this.propertiesRepository.findByID(id, ["hotel"]);
+            const hotel = await this.hotelsRepository.findByID(id, ['properties']);
             return {
                 success: true,
                 code   : 200,
-                message: 'Property has been retrieved.',
+                message: 'Hotel has been retrieved.',
                 data   : {
-                    property: property
+                    hotel: hotel
                 }
             };
         } catch (error) {
@@ -82,11 +82,11 @@ export class PropertiesController {
     @Delete("/:id")
     async delete(@PathParams('id') id: string): Promise<object | undefined> {
         try {
-            await this.propertiesRepository.delete(id);
+            await this.hotelsRepository.delete(id);
             return {
                 success: true,
                 code   : 200,
-                message: 'Property has been deleted.'
+                message: 'Hotel has been deleted.'
             };
         } catch (error) {
             return {
