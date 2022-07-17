@@ -1,6 +1,7 @@
-import {Controller, Get, PathParams, QueryParams} from "@tsed/common";
+import {BodyParams, Controller, Get, PathParams, Post, QueryParams} from "@tsed/common";
 import moment from "moment/moment";
 import {LocksRepository} from "../repositories/LocksRepository";
+import {parseICSFile} from "../config/common/common";
 
 @Controller("/locks")
 export class LocksController {
@@ -28,12 +29,31 @@ export class LocksController {
                 }
             }
         } catch (error) {
-            console.log({error});
             return {
                 success: false,
                 code   : 201,
-                message: 'Something went wrong.'
+                message: error.message || 'Something went wrong.'
             }
+        }
+    }
+
+    @Get("/parse-ics-file")
+    async parseICSFile(): Promise<object> {
+        try {
+            return {
+                success: true,
+                code   : 200,
+                message: 'Lock has been retrieved.',
+                data   : {
+                    eventData: await parseICSFile()
+                }
+            };
+        } catch (error) {
+            return {
+                success: false,
+                code   : 201,
+                message: error.message || 'Something went wrong. Please contact support team.',
+            };
         }
     }
 
@@ -60,7 +80,27 @@ export class LocksController {
             return {
                 success: false,
                 code   : 201,
-                message: 'Something went wrong. Please contact support team.',
+                message: error.message || 'Something went wrong. Please contact support team.',
+            };
+        }
+    }
+
+    @Post("/manual-lock-access")
+    async manualLockAccess(@BodyParams() bodyParams: any): Promise<object> {
+        try {
+            return {
+                success: true,
+                code   : 200,
+                message: 'Lock access has been granted.',
+                data   : {
+                    bodyParams
+                }
+            };
+        } catch (error) {
+            return {
+                success: false,
+                code   : 201,
+                message: error.message || 'Something went wrong. Please contact support team.',
             };
         }
     }

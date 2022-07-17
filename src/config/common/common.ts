@@ -40,11 +40,18 @@ export async function getAuthUserDetails(authRepository: Repository<any>, header
 }
 
 export async function parseICSFile() {
-    // use the sync function parseFile() to parse this ics file
-    const events = await ical.async.fromURL('http://v2.reservationkey.com/p/api/icalendar/export.ics?i=87892&r=295303&f=0');
-    // loop through events and log them
-    console.log('events %j',events);
-    for (const event of Object.values(events)) {
-        console.log({event});
+    //http://v2.reservationkey.com/p/api/icalendar/export.ics?i=87892&r=295303&f=0
+    const events = await ical.async.fromURL('http://localhost:8083/uploads/room-data.ics');
+
+    let eventsList: any = Object.values(events);
+    let summaryList     = [];
+    for (const event of eventsList) {
+        if (event && event.type == "VEVENT") {
+            let summaryObj = event.summary.split('; ');
+            for (let content of summaryObj) {
+                summaryList.push(content.split(': '));
+            }
+        }
     }
+    return summaryList;
 }

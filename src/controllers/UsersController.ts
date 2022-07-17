@@ -1,7 +1,6 @@
 import {BodyParams, Controller, Delete, Get, PathParams, Post, QueryParams} from "@tsed/common";
 import {User} from "../entities/User";
 import {UsersRepository} from "../repositories/UsersRepository";
-import {parseICSFile} from "../config/common/common";
 
 @Controller("/users")
 export class UsersController {
@@ -11,7 +10,6 @@ export class UsersController {
 
     @Get("/")
     async getList(@QueryParams() requestData: any): Promise<object> {
-        await parseICSFile();
         const limit  = (+requestData.pageNumber - 1) * +requestData.sizePerPage;
         const search = requestData.search ? requestData.search : '';
         try {

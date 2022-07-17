@@ -17,6 +17,7 @@ export class PropertiesRepository extends Repository<Property> {
         requestData.sortField = requestData.sortField == 'null' ? 'id' : requestData.sortField;
 
         let propety_query = this.propertyModel.createQueryBuilder('property')
+            .leftJoinAndSelect('property.hotel', 'hotel')
             .orderBy("property." + requestData.sortField, requestData.sortOrder.toUpperCase())
             .take(requestData.pageSize)
             .skip(limit);
