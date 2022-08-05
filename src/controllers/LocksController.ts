@@ -88,7 +88,7 @@ export class LocksController {
     @Post("/manual-lock-access")
     async manualLockAccess(@BodyParams() bodyParams: any): Promise<object> {
         try {
-            let assignPassword = await this.locksRepository.addNewPasswordToLock(bodyParams);
+            //let assignPassword = await this.locksRepository.addNewPasswordToLock(bodyParams);
 
             return {
                 success: true,
