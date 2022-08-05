@@ -24,9 +24,7 @@ export class AuthController {
                 message: 'Please enter required fields.'
             };
         }
-        console.log('here');
 
-        console.log({email});
         const userRepository = getRepository(User);
         let userDetail: User;
         try {

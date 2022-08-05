@@ -13,10 +13,10 @@ import {config, rootDir} from "./config";
 
 @Configuration({
     ...config,
-    acceptMimes: ["application/json"],
-    httpPort: process.env.PORT || 8083,
-    httpsPort: false, // CHANGE
-    mount: {
+    acceptMimes   : ["application/json"],
+    httpPort      : process.env.PORT || 8083,
+    httpsPort     : false, // CHANGE
+    mount         : {
         "/rest": [
             `${rootDir}/controllers/**/*.ts`
         ]
@@ -24,18 +24,18 @@ import {config, rootDir} from "./config";
     componentsScan: [
         "${rootDir}/middlewares/**/*.ts"
     ],
-    views: {
-        root: `${rootDir}/views`,
+    views         : {
+        root      : `${rootDir}/views`,
         extensions: {
             ejs: "ejs"
         }
     },
-    exclude: [
+    exclude       : [
         "**/*.spec.ts"
     ],
-    logger: {
+    logger        : {
         disableRoutesSummary: true, // remove table with routes summary
-        logRequest: false,
+        logRequest          : false,
     },
     /*multer: {
         dest: `${rootDir}/../uploads`,
