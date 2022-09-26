@@ -1,0 +1,20 @@
+{
+    "apps": [
+        {
+            "name": "Backend Application",
+            "script": "./dist/index.js",
+            "max_memory_restart": "4G",
+            "instances": "max",
+            "exec_mode": "cluster_mode",
+            "ignore_watch": [
+                "node_modules",
+                "uploads"
+            ],
+            "exp_backoff_restart_delay": 100,
+            "autostart": true,
+            "env": {
+                "NODE_ENV": "development"
+            }
+        }
+    ]
+}
