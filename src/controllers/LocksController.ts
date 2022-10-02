@@ -16,7 +16,7 @@ export class LocksController {
                 pageNo     : 1,
                 pageSize   : 20,
                 clientId   : 'e4336fa2848b43f6ae756dedebb7608c',
-                accessToken: '116ad564818d713d69d025eba52c976d',
+                accessToken: '258473f8fe22a8e1637815a25c200d5c',
                 date       : moment().valueOf()
             });
 
@@ -65,7 +65,7 @@ export class LocksController {
                 pageSize   : 20,
                 lockId     : id,
                 clientId   : 'e4336fa2848b43f6ae756dedebb7608c',
-                accessToken: '116ad564818d713d69d025eba52c976d',
+                accessToken: '258473f8fe22a8e1637815a25c200d5c',
                 date       : moment().valueOf()
             });
             return {
@@ -88,14 +88,14 @@ export class LocksController {
     @Post("/manual-lock-access")
     async manualLockAccess(@BodyParams() bodyParams: any): Promise<object> {
         try {
-            //let assignPassword = await this.locksRepository.addNewPasswordToLock(bodyParams);
-
+            let assignPassword = await this.locksRepository.addNewPasswordToLock(bodyParams);
             return {
                 success: true,
                 code   : 200,
                 message: 'Lock access has been granted.',
                 data   : {
-                    bodyParams
+                    bodyParams,
+                    assignPassword
                 }
             };
         } catch (error) {
