@@ -20,10 +20,13 @@ export class LocksRepository {
     };
 
     async getList(url: string, urlQueryParams: any): Promise<any> {
+        console.log('this.getRequestOptions', this.getRequestOptions);
         let lockListData = await axios.get(url + '?' + new URLSearchParams(urlQueryParams), this.getRequestOptions);
         if (lockListData) {
             return lockListData.data;
         }
+
+        console.log({lockListData});
 
         return [];
     }
