@@ -19,7 +19,7 @@ export class LocksController {
                 accessToken: '258473f8fe22a8e1637815a25c200d5c',
                 date       : moment().valueOf()
             });
-
+            console.log({locks});
             return {
                 success: true,
                 code   : 200,
@@ -29,6 +29,7 @@ export class LocksController {
                 }
             }
         } catch (error) {
+            console.log({error});
             return {
                 success: false,
                 code   : 201,
