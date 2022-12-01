@@ -19,7 +19,7 @@ cd <property-management-backend>
 npm install
 ```
 
-- Run the project
+- To run the project
 
 ```
 npm run start
