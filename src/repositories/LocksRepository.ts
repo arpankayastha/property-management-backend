@@ -1,22 +1,23 @@
 import axios from "axios";
 import moment from "moment/moment";
-import {Property} from "../entities/Property";
+import qs from "qs";
+import { Property } from "../entities/Property";
 
 export class LocksRepository {
 
     public getRequestOptions = {
-        method : 'GET',
+        method: 'GET',
         headers: {
             'Content-Type': 'application/json'
         }
     };
 
     public postRequestOptions = {
-        method : 'POST',
+        method: 'POST',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/x-www-form-urlencoded'
         },
-        body   : ''
+        data: ''
     };
 
     async getList(url: string, urlQueryParams: any): Promise<any> {
@@ -37,35 +38,50 @@ export class LocksRepository {
     }
 
     async postData(url: string, values: any): Promise<any> {
-        this.postRequestOptions.body = JSON.stringify(values);
+       // this.postRequestOptions.data = qs.stringify(values);
         console.log('this.postRequestOptions', this.postRequestOptions);
-        console.log({url});
+        console.log({ url });
+
         //return this.postRequestOptions;
         try {
-            let postLockRequest = await axios.post(url, this.postRequestOptions);
-            console.log({postLockRequest});
+            let postLockRequest = await axios.post(url,qs.stringify(values),this.postRequestOptions)
+           //  let postLockRequest = await axios.post(url, this.postRequestOptions);
+            // let postLockRequest = await axios.post(url, JSON.stringify(values));
+            //  console.log({postLockRequest});
+            console.log(postLockRequest)
             if (postLockRequest) {
                 return postLockRequest.data;
             }
         } catch (e) {
+             console.log(e)
             throw new Error(e.message);
+
         }
-        return null;
+
+         return null;
     }
 
     async addNewPasswordToLock(params: any) {
         let propertyDetails = await Property.findOne(params.propertyId);
-        params.lockId       = (propertyDetails) ? propertyDetails.propertyId : 0;
+        params.type = (params.gateway==true) ? 2 : 1;
+        params.lockId = (propertyDetails) ? propertyDetails.propertyId : 0;
         return await this.postData('https://api.sciener.com/v3/keyboardPwd/add', {
-            clientId       : 'e4336fa2848b43f6ae756dedebb7608c',
-            accessToken    : '258473f8fe22a8e1637815a25c200d5c',
+            clientId: 'e4336fa2848b43f6ae756dedebb7608c',
+            accessToken: process.env.TOKEN,
             lockId         : params.lockId,
             keyboardPwd    : params.passcode,
             keyboardPwdName: params.name,
             startDate      : params.startDate,
             endDate        : params.endDate,
-            addType        : 2,
+            addType        : params.type,
             date           : moment().valueOf()
+        //     lockId: 7084100,
+        //     keyboardPwd: 9371,
+        //   //  keyboardPwdName: 'Raj Patel',
+        //     startDate: 1671171300000,
+        //     endDate: 1673849700000,
+           // addType: 1,
+            //date: moment().valueOf()
         })
     }
 }

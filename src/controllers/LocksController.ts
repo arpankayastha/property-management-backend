@@ -12,11 +12,12 @@ export class LocksController {
     @Get("/")
     async getList(@QueryParams() requestData: any): Promise<object> {
         try {
+            
             let locks = await this.locksRepository.getList('http://api.sciener.com/v3/lock/list', {
                 pageNo     : 1,
                 pageSize   : 20,
                 clientId   : 'e4336fa2848b43f6ae756dedebb7608c',
-                accessToken: '258473f8fe22a8e1637815a25c200d5c',
+                accessToken: process.env.TOKEN,
                 date       : moment().valueOf()
             });
             return {
@@ -64,7 +65,7 @@ export class LocksController {
                 pageSize   : 20,
                 lockId     : id,
                 clientId   : 'e4336fa2848b43f6ae756dedebb7608c',
-                accessToken: '258473f8fe22a8e1637815a25c200d5c',
+                accessToken: process.env.TOKEN,
                 date       : moment().valueOf()
             });
             return {

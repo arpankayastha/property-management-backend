@@ -44,8 +44,8 @@ export async function getTokenForReservationAPI() {
     let authTokenObj = await new LocksRepository().postData('https://api.sciener.com/oauth2/token', {
         client_id    : 'e4336fa2848b43f6ae756dedebb7608c',
         client_secret: '630d8a7ae710b209d5f0ba73551ae5d9',
-        username     : 'info@babyquailinn.com',
-        password     : 'f8ba5c175519ef382ece556b167d4329'
+        username     : 'info@thecanyonmotel.com',
+        password     : 'b59b65a713d0763cd6dae9b4a850e777'
     });
 
     if (authTokenObj) {

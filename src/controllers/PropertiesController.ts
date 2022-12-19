@@ -79,11 +79,11 @@ export class PropertiesController {
             };
         }
     }
-    @Post("/autoFillData")
-    async autoFillData(@BodyParams() bodyParams: any): Promise<object> {
+    @Get("/autoFillData/:id")
+    async autoFillData(@PathParams() PathParams: any): Promise<object> {
         try {
             
-            const properties =await this.propertiesRepository.findOne({ id: bodyParams.id });
+            const properties =await this.propertiesRepository.findOne({ id: PathParams.id });
             console.log(properties?.propertyLockFile);
             const events = await ical.async.fromURL(properties?.propertyLockFile);
             let eventsList: any = Object.values(events);
@@ -106,14 +106,15 @@ export class PropertiesController {
                     endDate : event.end.toISOString(),
                     customerName : customerName[0],
                     email:summaryObj[3],
-                    roomNamae:summaryObj[2],
+                    roomName:summaryObj[2],
                     contactNumber:summaryObj[4],
                     otherInfo:otherInfo
                     }
                     summaryList.push(log);
                 }
             }
-
+            if (Array.isArray(summaryList) && summaryList.length)
+            {
             return {
                 success: true,
                 code   : 200,
@@ -121,7 +122,17 @@ export class PropertiesController {
                 data   : {
                     icalData: summaryList
                 }
-            };
+            };}
+            else {
+                return {
+                    success: true,
+                    code   : 404,
+                    message: 'Auto fill data has been not retrieved.',
+                    data   : {
+                        icalData: summaryList
+                    }
+                }  
+            }
         } catch (error) {
             return {
                 success: false,

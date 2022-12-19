@@ -4,7 +4,7 @@ import {getRepository} from "typeorm";
 // @ts-ignore
 import * as firebase from 'firebase-admin';
 // @ts-ignore
-import {generateJWTToken, getAuthRepository, getAuthUserDetails, getInitials} from "../config/common/common";
+import {generateJWTToken, getAuthRepository, getAuthUserDetails, getInitials,getTokenForReservationAPI} from "../config/common/common";
 import {CustomAuthMiddleware} from "../middlewares/CustomAuthMiddleware";
 import moment from "moment";
 
@@ -38,6 +38,8 @@ export class AuthController {
             }
             userDetail.session_token = generateJWTToken(userDetail);
             userDetail               = await userRepository.save(userDetail);
+          let   accessToken = await getTokenForReservationAPI();
+          process.env.TOKEN = accessToken;
             // @ts-ignore
             delete userDetail.password;
             return {
